@@ -856,7 +856,7 @@ let query_package () =
     let eff_packages =
       if !recursive then begin
         if !descendants then
-          Fl_package_base.package_users predicates1 packages1
+          Fl_package_base.package_users ~preds:predicates1 packages1
         else
           package_deep_ancestors predicates1 packages1
       end
@@ -1823,7 +1823,7 @@ let copy_file ?(rename = (fun name -> name)) ?(append = "") src dstdir =
 		   outpath in
     try
       let buflen = 4096 in
-      let buf = String.create buflen in   (* FIXME: Bytes.create *)
+      let buf = Bytes.create buflen in   (* FIXME: Bytes.create *)
       let pos = ref 0 in
       let len = ref (input ch_in buf 0 buflen) in
       while !len > 0 do
